@@ -9,21 +9,35 @@ import android.widget.TextView;
 import com.example.scholarship.android.movies.api.Movie;
 import com.example.scholarship.android.movies.api.MovieDbApiUtils;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class MovieDetails extends AppCompatActivity {
 
     public static final String MOVIE = "movie";
     private Movie movie;
 
+    @BindView(R.id.tv_movie_title)
+    TextView mMovieTitleTextView;
+
+    @BindView(R.id.image_movie_poster)
+    ImageView mMoviePosterImageView;
+
+    @BindView(R.id.tv_rating)
+    TextView mRatingTextView;
+
+    @BindView(R.id.tv_release_date)
+    TextView mReleaseDateTextView;
+
+    @BindView(R.id.tv_movie_plot_content)
+    TextView mPlotTextView;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movie_details);
-
-        TextView mMovieTitleTextView = (TextView) findViewById(R.id.tv_movie_title);
-        ImageView mMoviePosterImageView = (ImageView) findViewById(R.id.image_movie_poster);
-        TextView mRatingTextView = (TextView) findViewById(R.id.tv_rating);
-        TextView mReleaseDateTextView = (TextView) findViewById(R.id.tv_release_date);
-        TextView mPlotTextView = (TextView) findViewById(R.id.tv_movie_plot_content);
+        ButterKnife.bind(this);
 
         Intent intent = getIntent();
 

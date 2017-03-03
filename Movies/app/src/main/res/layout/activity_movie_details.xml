@@ -21,18 +21,18 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
-            android:textSize="28sp"
+            android:textSize="@dimen/title_text_size"
             android:textStyle="bold" />
 
         <ImageView
             android:id="@+id/image_movie_poster"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:minHeight="150dp"
+            android:minHeight="@dimen/min_height_poster"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
             android:layout_below="@+id/tv_movie_title"
-            android:padding="16dp"
+            android:padding="@dimen/padding_top_movie_details"
             android:contentDescription="@string/movie_poster"/>
 
         <LinearLayout
@@ -43,19 +43,19 @@
             android:layout_alignParentStart="true"
             android:layout_below="@id/tv_movie_title"
             android:orientation="vertical"
-            android:paddingTop="16dp">
+            android:paddingTop="@dimen/padding_top_movie_details">
 
             <TextView
                 android:id="@+id/tv_rating"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="18sp" />
+                android:textSize="@dimen/details_text_size" />
 
             <TextView
                 android:id="@+id/tv_release_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="18sp"
+                android:textSize="@dimen/details_text_size"
                 android:layout_marginTop="8dp"/>
 
         </LinearLayout>
@@ -65,17 +65,17 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/image_movie_poster"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="@dimen/small_margin"
             android:text="@string/plot"
-            android:textSize="24sp"
+            android:textSize="@dimen/header_text_size"
             android:textStyle="bold" />
 
         <TextView
             android:id="@+id/tv_movie_plot_content"
             android:layout_below="@+id/tv_movie_plot_title"
-            android:layout_marginTop="6dp"
+            android:layout_marginTop="@dimen/small_margin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="20sp" />
+            android:textSize="@dimen/text_size" />
     </RelativeLayout>
 </ScrollView>
