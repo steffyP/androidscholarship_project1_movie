@@ -1,8 +1,8 @@
 package com.example.scholarship.android.movies;
 
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -12,19 +12,21 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.example.scholarship.android.movies.api.Movie;
-import com.example.scholarship.android.movies.api.MovieDbApiUtils;
-import com.example.scholarship.android.movies.backgroundtasks.MovieLoader;
+import com.example.scholarship.android.movies.backgroundtasks.LoaderCallbackMovies;
 
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class MainActivity extends AppCompatActivity implements MovieAdapter.MovieOnClickListener, MovieLoader.MovieLoaderCallback{
+public class MainActivity extends AppCompatActivity implements MovieAdapter.MovieOnClickListener, LoaderCallbackMovies.MovieLoaderCallback {
 
-    public enum SortCriteria{
+
+
+    public enum SortCriteria {
         TOP_RATED, POPULAR
-   }
+    }
+
     @BindView(R.id.recyclerview_movie_posters)
     RecyclerView mRecyclerView;
 
@@ -35,6 +37,8 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
     View mProgressBarView;
 
     private MovieAdapter mMovieAdapter;
+    private static final int LOADER_MOVIE_ID = 1122;
+    private LoaderCallbackMovies mLoaderCallback;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,8 +53,24 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
         mMovieAdapter = new MovieAdapter(this, this);
         mRecyclerView.setAdapter(mMovieAdapter);
 
-        new MovieLoader(this).execute(SortCriteria.TOP_RATED);
+        //new MovieLoader(this).execute(SortCriteria.TOP_RATED);
 
+       setupLoaderManager(SortCriteria.TOP_RATED);
+    }
+
+    private void setupLoaderManager(SortCriteria sortCritera) {
+        Bundle bundle = new Bundle();
+        bundle.putString(LoaderCallbackMovies.LOAD_IDENTIFIER, LoaderCallbackMovies.LOAD_TOP_RATED);
+        bundle.putString(LoaderCallbackMovies.SORT_CRITERIA_IDENTIFIER, sortCritera.toString());
+        Loader loader = getSupportLoaderManager().getLoader(LOADER_MOVIE_ID);
+        if(mLoaderCallback == null) {
+            mLoaderCallback = new LoaderCallbackMovies(this, this);
+        }
+        if (loader != null) {
+            getSupportLoaderManager().restartLoader(LOADER_MOVIE_ID, bundle, mLoaderCallback);
+        } else {
+            getSupportLoaderManager().initLoader(LOADER_MOVIE_ID, bundle, mLoaderCallback);
+        }
     }
 
     @Override
@@ -61,13 +81,19 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
     }
 
     @Override
+    protected void onDestroy() {
+        getSupportLoaderManager().destroyLoader(LOADER_MOVIE_ID);
+        super.onDestroy();
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case R.id.menu_sort_popular:
-                new MovieLoader(this).execute(SortCriteria.POPULAR);
+                setupLoaderManager(SortCriteria.POPULAR);
                 return true;
             case R.id.menu_sort_top_rated:
-                new MovieLoader(this).execute(SortCriteria.TOP_RATED);
+                setupLoaderManager(SortCriteria.TOP_RATED);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -84,6 +110,8 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
 
     @Override
     public void onPreExecute() {
+        if(isFinishing()) return;
+
         mRecyclerView.setVisibility(View.GONE);
         mErrorMessageView.setVisibility(View.GONE);
         mProgressBarView.setVisibility(View.VISIBLE);
@@ -91,8 +119,10 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
 
     @Override
     public void onPostExecute(List<Movie> movies) {
+        if(isFinishing()) return;
+
         mProgressBarView.setVisibility(View.GONE);
-        if(movies == null){
+        if (movies == null) {
             mErrorMessageView.setVisibility(View.VISIBLE);
         } else {
             mMovieAdapter.setMovies(movies);
