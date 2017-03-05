@@ -1,4 +1,4 @@
-package com.example.scholarship.android.movies.data;
+package com.example.scholarship.android.movies.data.model;
 
 import org.json.JSONObject;
 

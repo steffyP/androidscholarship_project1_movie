@@ -1,4 +1,4 @@
-package com.example.scholarship.android.movies.data;
+package com.example.scholarship.android.movies.data.model;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -9,6 +9,8 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Parcel;
 import android.os.Parcelable;
+
+import com.example.scholarship.android.movies.data.MovieContract;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -210,7 +212,7 @@ public class Movie implements Parcelable {
             try {
                 JSONObject jsonObject = new JSONObject(mVideosJsonString);
                 JSONArray array = jsonObject.optJSONArray("results");
-                if(array != null){
+                if(array != null && array.length() > 0){
                     videos = new ArrayList<>();
                     for(int i = 0; i < array.length(); i++){
                         videos.add(new Video(array.optJSONObject(i)));
@@ -228,7 +230,7 @@ public class Movie implements Parcelable {
             try {
                 JSONObject jsonObject = new JSONObject(mReviewsJsonString);
                 JSONArray array = jsonObject.optJSONArray("results");
-                if (array != null) {
+                if (array != null && array.length() > 0) {
                     reviews = new ArrayList<>();
                     for (int i = 0; i < array.length(); i++) {
                         reviews.add(new Review(array.optJSONObject(i)));

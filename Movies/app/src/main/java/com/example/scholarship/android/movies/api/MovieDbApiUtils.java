@@ -6,8 +6,7 @@ import android.util.Log;
 import android.widget.ImageView;
 
 import com.example.scholarship.android.movies.BuildConfig;
-import com.example.scholarship.android.movies.data.Movie;
-import com.example.scholarship.android.movies.data.Video;
+import com.example.scholarship.android.movies.data.model.Movie;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;

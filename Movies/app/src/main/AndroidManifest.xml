@@ -16,7 +16,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
+               <activity
             android:name=".MovieDetails"
             android:parentActivityName=".MainActivity"
             android:label="@string/movie_details"
@@ -26,6 +26,15 @@
                 android:value=".MainActivity" />
         </activity>
 
+        <activity
+            android:name=".MovieReviews"
+            android:parentActivityName=".MovieDetails"
+            android:label="@string/movie_reviews"
+            >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MovieDetails" />
+        </activity>
 
         <provider
             android:name="com.example.scholarship.android.movies.data.MovieContentProvider"

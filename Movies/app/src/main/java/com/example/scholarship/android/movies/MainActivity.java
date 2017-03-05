@@ -11,9 +11,10 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
 import com.example.scholarship.android.movies.backgroundtasks.LoaderCallbackMovies;
-import com.example.scholarship.android.movies.data.Movie;
+import com.example.scholarship.android.movies.data.model.Movie;
 
 import java.util.List;
 
@@ -33,7 +34,7 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
     RecyclerView mRecyclerView;
 
     @BindView(R.id.tv_error_message_display)
-    View mErrorMessageView;
+    TextView mErrorMessageView;
 
     @BindView(R.id.pb_loading_indicator)
     View mProgressBarView;
@@ -147,11 +148,19 @@ public class MainActivity extends AppCompatActivity implements MovieAdapter.Movi
         if (isFinishing()) return;
 
         mProgressBarView.setVisibility(View.GONE);
-        if (movies == null) {
+        if (movies == null || movies.isEmpty()) {
+            if(mSelectedSortCriteria == SortCriteria.LOCALLY){
+                mErrorMessageView.setText(getString(R.string.no_local_movies));
+            } else {
+                mErrorMessageView.setText(getString(R.string.error_message));
+
+            }
             mErrorMessageView.setVisibility(View.VISIBLE);
+            mRecyclerView.setVisibility(View.GONE);
         } else {
             mMovieAdapter.setMovies(movies);
             mRecyclerView.setVisibility(View.VISIBLE);
+            mErrorMessageView.setVisibility(View.GONE);
         }
     }
 

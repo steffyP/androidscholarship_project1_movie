@@ -9,11 +9,16 @@
     <string name="movie_release_date">%1$s</string>
     <string name="movie_poster">Movie Poster</string>
     <string name="trailer">Trailer</string>
-    <string name="show_reviews">Show Reviews > </string>
+    <string name="show_reviews">Show Reviews</string>
     <string name="added_movie">Added movie to local collection</string>
     <string name="removed_movie">Removed movie from local collection</string>
     <string name="local_collection">Local Collection</string>
     <string name="title_top_rated">Top Rated Movies</string>
     <string name="title_popular">Popular Movies</string>
     <string name="title_local_collection">Local Movie Collection</string>
+    <string name="no_trailers_found">No trailers found.</string>
+    <string name="no_reviews">No Reviews\navailable</string>
+    <string name="chooser_title">Choose Video Player</string>
+    <string name="movie_reviews">Movie Review</string>
+    <string name="no_local_movies">You have no movies in your local collection yet.</string>
 </resources>

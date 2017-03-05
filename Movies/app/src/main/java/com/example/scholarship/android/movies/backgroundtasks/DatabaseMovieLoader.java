@@ -3,11 +3,8 @@ package com.example.scholarship.android.movies.backgroundtasks;
 import android.content.Context;
 import android.database.Cursor;
 import android.support.v4.content.AsyncTaskLoader;
-import android.support.v4.content.Loader;
 
-import com.example.scholarship.android.movies.MainActivity;
-import com.example.scholarship.android.movies.api.MovieDbApiUtils;
-import com.example.scholarship.android.movies.data.Movie;
+import com.example.scholarship.android.movies.data.model.Movie;
 import com.example.scholarship.android.movies.data.MovieContract;
 
 import java.util.ArrayList;

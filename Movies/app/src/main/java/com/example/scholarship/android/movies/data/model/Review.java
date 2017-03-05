@@ -1,4 +1,4 @@
-package com.example.scholarship.android.movies.data;
+package com.example.scholarship.android.movies.data.model;
 
 import org.json.JSONObject;
 
@@ -6,7 +6,7 @@ import org.json.JSONObject;
  * Created by stefanie on 05.03.17.
  */
 
-class Review {
+public class Review {
     private String id;
     private String content;
     private String author;

@@ -8,7 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.example.scholarship.android.movies.data.Movie;
+import com.example.scholarship.android.movies.data.model.Movie;
 import com.example.scholarship.android.movies.api.MovieDbApiUtils;
 
 

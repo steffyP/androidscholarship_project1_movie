@@ -6,7 +6,7 @@ import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 
 import com.example.scholarship.android.movies.MainActivity;
-import com.example.scholarship.android.movies.data.Movie;
+import com.example.scholarship.android.movies.data.model.Movie;
 
 import java.util.List;
 
