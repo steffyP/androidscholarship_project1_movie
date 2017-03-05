@@ -5,7 +5,8 @@ import android.os.Bundle;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 
-import com.example.scholarship.android.movies.api.Movie;
+import com.example.scholarship.android.movies.MainActivity;
+import com.example.scholarship.android.movies.data.Movie;
 
 import java.util.List;
 
@@ -41,8 +42,12 @@ public class LoaderCallbackMovies implements LoaderManager.LoaderCallbacks<List<
         if(mCallback != null){
             mCallback.onPreExecute();
         }
-
-        return new AsyncMovieLoader(mContext, args);
+        if(args.getString(SORT_CRITERIA_IDENTIFIER).equals(MainActivity.SortCriteria.LOCALLY.toString())){
+            return new DatabaseMovieLoader(mContext);
+        }
+        else{
+            return new AsyncMovieLoader(mContext, args);
+        }
     }
 
 

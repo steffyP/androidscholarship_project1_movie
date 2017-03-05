@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.support.v4.content.AsyncTaskLoader;
 
 import com.example.scholarship.android.movies.MainActivity;
-import com.example.scholarship.android.movies.api.Movie;
+import com.example.scholarship.android.movies.data.Movie;
 import com.example.scholarship.android.movies.api.MovieDbApiUtils;
 
 import java.util.List;

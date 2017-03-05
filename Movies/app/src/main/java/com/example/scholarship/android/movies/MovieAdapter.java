@@ -1,13 +1,14 @@
 package com.example.scholarship.android.movies;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.example.scholarship.android.movies.api.Movie;
+import com.example.scholarship.android.movies.data.Movie;
 import com.example.scholarship.android.movies.api.MovieDbApiUtils;
 
 
@@ -44,7 +45,14 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieAdapter
     @Override
     public void onBindViewHolder(MovieAdapterViewHolder holder, int position) {
         Movie movie = mMovies.get(position);
-        MovieDbApiUtils.getInstance().loadThumbnailImageToImageView(mContext, movie.getPosterPath(), holder.mImageView);
+
+        // no need to load the image again if it is already stored locally
+        Drawable drawable = movie.getBlobImage(mContext);
+        if(drawable != null){
+            holder.mImageView.setImageDrawable(drawable);
+        }else {
+            MovieDbApiUtils.getInstance().loadThumbnailImageToImageView(mContext, movie.getPosterPath(), holder.mImageView);
+        }
     }
 
 

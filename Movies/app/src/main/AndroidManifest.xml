@@ -25,6 +25,13 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainActivity" />
         </activity>
+
+
+        <provider
+            android:name="com.example.scholarship.android.movies.data.MovieContentProvider"
+            android:authorities="com.example.scholarship.android.movies"
+            android:exported="false"/>
+
     </application>
 
 </manifest>

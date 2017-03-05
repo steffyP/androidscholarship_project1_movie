@@ -10,4 +10,8 @@
         android:title="@string/sort_by_top_rated"
         app:showAsAction="never"
         android:orderInCategory="2"/>
+    <item android:id="@+id/menu_local_collection"
+        android:title="@string/local_collection"
+        app:showAsAction="never"
+        android:orderInCategory="3"/>
 </menu>

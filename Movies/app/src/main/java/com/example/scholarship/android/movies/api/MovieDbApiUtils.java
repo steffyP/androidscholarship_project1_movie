@@ -6,6 +6,8 @@ import android.util.Log;
 import android.widget.ImageView;
 
 import com.example.scholarship.android.movies.BuildConfig;
+import com.example.scholarship.android.movies.data.Movie;
+import com.example.scholarship.android.movies.data.Video;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
@@ -39,13 +41,16 @@ public class MovieDbApiUtils {
 
     private static final String BASE_URL = "https://api.themoviedb.org/3";
 
-    private static final String MOVIES_POPULAR = "/movie/popular";
-    private static final String MOVIES_TOP_RATED = "/movie/top_rated";
+    private static final String MOVIE = "movie";
+    private static final String POPULAR = "popular";
+    private static final String TOP_RATED = "top_rated";
 
 
     private static final String QUERY_API_KEY = "api_key";
     private static final String MOVIE_DB_API_KEY = BuildConfig.MOVIE_DB_API_KEY; // TODO: (note for instructors) - replace this with the actual API key
 
+    private static final String QUERY_APPEND_TO_RESPONSE = "append_to_response";
+    private static final String PARAM_APPEND = "reviews,videos";
 
     private static final String BASE_URL_POSTER = "http://image.tmdb.org/t/p/";
 
@@ -107,11 +112,11 @@ public class MovieDbApiUtils {
     /**
      * Builds the URL for querying movies
      *
-     * @param getDescription the GET call: either {@link MovieDbApiUtils#MOVIES_POPULAR} or {@link MovieDbApiUtils#MOVIES_TOP_RATED}
+     * @param path the GET call: either {@link MovieDbApiUtils#POPULAR} or {@link MovieDbApiUtils#TOP_RATED}
      * @return URL with api key, ready to be called; or null if Uri could not be built
      */
-    private URL buildURL(String getDescription) {
-        Uri builtUri = Uri.parse(BASE_URL + getDescription).buildUpon()
+    private URL buildURLToQueryMovies(String path) {
+        Uri builtUri = Uri.parse(BASE_URL).buildUpon().appendPath(MOVIE).appendPath(path)
                 .appendQueryParameter(QUERY_API_KEY, MOVIE_DB_API_KEY)
                 .build();
 
@@ -163,7 +168,7 @@ public class MovieDbApiUtils {
      * @return list of movies
      */
     public List<Movie> queryTopRatedMovies() {
-        URL url = buildURL(MOVIES_TOP_RATED);
+        URL url = buildURLToQueryMovies(TOP_RATED);
         if (url == null) {
             return null;
         }
@@ -178,7 +183,7 @@ public class MovieDbApiUtils {
      * @return list of movies
      */
     public List<Movie> queryPopularMovies() {
-        URL url = buildURL(MOVIES_POPULAR);
+        URL url = buildURLToQueryMovies(POPULAR);
         if (url == null) {
             return null;
         }
@@ -201,17 +206,40 @@ public class MovieDbApiUtils {
     }
 
 
-
     /**
-     * Loads the posterPath image into the provided imageView (with image size "w185")
-     * with the help of {@link Picasso#load(File)}
+     * Gets additional details e.g. list of videos and reviews for the movie
      *
-     * @param context
-     * @param posterPath the posterPath from the movie
-     * @param imageView the ImageView to load the image into
+     * @param movie
+     * @return movie with updated infos
      */
-    public void loadLargerImageToImageView(Context context, String posterPath, ImageView imageView){
-        Picasso.with(context).load(BASE_URL_POSTER + POSTER_SIZE_DETAILS + posterPath).into(imageView);
+    public Movie queryDetailsForMovie(Movie movie){
+        Uri builtUri = Uri.parse(BASE_URL).buildUpon().appendPath(MOVIE).appendPath(movie.getId()+"")
+                .appendQueryParameter(QUERY_API_KEY, MOVIE_DB_API_KEY)
+                .appendQueryParameter(QUERY_APPEND_TO_RESPONSE, PARAM_APPEND)
+                .build();
+        URL url = null;
+        try {
+            url = new URL(builtUri.toString());
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+
+        if(url != null){
+            String result = handleApiCall(url);
+            try {
+                JSONObject json = new JSONObject(result);
+
+                JSONObject reviews = json.optJSONObject("reviews");
+                movie.setReviews(reviews);
+
+                JSONObject videos = json.optJSONObject("videos");
+                movie.setVideos(videos);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+        return movie;
     }
+
 
 }
