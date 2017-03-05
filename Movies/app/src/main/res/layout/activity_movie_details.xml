@@ -93,6 +93,7 @@
             android:layout_below="@+id/header_container"
             android:layout_marginLeft="@dimen/small_margin"
             android:text="@string/plot"
+            android:layout_marginTop="@dimen/small_margin"
             android:textSize="@dimen/header_text_size"
             android:textStyle="bold" />
 

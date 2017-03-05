@@ -45,5 +45,6 @@ public class MovieContract {
         public static final String COLUMN_VIDEOS_JSON_STRING = "videos_json_string";
 
         public static final String COLUMN_REVIEWS_JSON_STRING = "reviews_json_string";
+        public static final String COLUMN_VOTE_AVERAGE = "vote_average";
     }
 }

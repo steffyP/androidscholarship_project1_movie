@@ -41,6 +41,7 @@ public class Movie implements Parcelable {
     private String mReviewsJsonString;
     private String mVideosJsonString;
 
+    private double mVoteAverage;
     private List<Video> videos;
     private List<Review> reviews;
 
@@ -51,6 +52,8 @@ public class Movie implements Parcelable {
         mId = json.optInt("id");
         mTitle = json.optString("title");
         mPopularity = json.optDouble("popularity");
+        mVoteAverage = json.optDouble("vote_average");
+
     }
 
     public Movie(Cursor cursor) {
@@ -67,6 +70,7 @@ public class Movie implements Parcelable {
             mPopularity = cursor.getDouble(cursor.getColumnIndex(MovieContract.Movie.COLUMN_POPULARITY));
 
             mDatabaseId = cursor.getInt(cursor.getColumnIndex(MovieContract.Movie._ID));
+            mVoteAverage = cursor.getDouble(cursor.getColumnIndex(MovieContract.Movie.COLUMN_VOTE_AVERAGE));
 
             mBlob = cursor.getBlob(cursor.getColumnIndex(MovieContract.Movie.COLUMN_POSTER_BLOB));
 
@@ -111,6 +115,9 @@ public class Movie implements Parcelable {
     public int describeContents() {
         return 0;
     }
+    public double getVoteAverage() {
+        return mVoteAverage;
+    }
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
@@ -132,6 +139,8 @@ public class Movie implements Parcelable {
 
         dest.writeString(mReviewsJsonString);
         dest.writeString(mVideosJsonString);
+        dest.writeDouble(mVoteAverage);
+
     }
 
 
@@ -150,6 +159,8 @@ public class Movie implements Parcelable {
         }
         mReviewsJsonString = in.readString();
         mVideosJsonString = in.readString();
+        mVoteAverage = in.readDouble();
+
     }
 
 
@@ -175,6 +186,8 @@ public class Movie implements Parcelable {
         contentValues.put(MovieContract.Movie.COLUMN_POSTER_BLOB, mBlob);
         contentValues.put(MovieContract.Movie.COLUMN_REVIEWS_JSON_STRING, mReviewsJsonString);
         contentValues.put(MovieContract.Movie.COLUMN_VIDEOS_JSON_STRING, mVideosJsonString);
+        contentValues.put(MovieContract.Movie.COLUMN_VOTE_AVERAGE, mVoteAverage);
+
         return contentValues;
     }
 

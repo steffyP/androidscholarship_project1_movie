@@ -3,6 +3,7 @@ package com.example.scholarship.android.movies.data;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+
 import com.example.scholarship.android.movies.data.MovieContract.Movie;
 
 /**
@@ -32,7 +33,8 @@ public class MovieDatabaseHelper extends SQLiteOpenHelper {
                 Movie.COLUMN_POPULARITY + " REAL, " +
                 Movie.COLUMN_POSTER_BLOB + " BLOB, " +
                 Movie.COLUMN_REVIEWS_JSON_STRING + " TEXT, " +
-                Movie.COLUMN_VIDEOS_JSON_STRING + " TEXT " +
+                Movie.COLUMN_VIDEOS_JSON_STRING + " TEXT, " +
+                Movie.COLUMN_VOTE_AVERAGE + " REAL " +
                 " );");
     }
 
